@@ -24,7 +24,9 @@ def test_can_run_test_function():
 def test_assert_equal_raises_exception_on_unequal():
     try:
         assert_equal(86, 99)
-        print("WARNING WARNING WARNING: assert_equals is broken and the rest of your tests are not trustworthy")
+        print(
+            "WARNING WARNING WARNING: assert_equals is broken and the rest of your tests are not trustworthy"
+        )
     except XUnitTestFailure:
         pass
 
@@ -48,7 +50,9 @@ def test_print_failure():
 
     spy_test_runner = SpyTestRunner()
     spy_test_runner.run_test_function(test_failure)
-    assert_equal(["[FAILURE] test_failure: Expected 42, got 47"], spy_test_runner.printed)
+    assert_equal(
+        ["[FAILURE] test_failure: Expected 42, got 47"], spy_test_runner.printed
+    )
 
 
 def test_print_exception():
@@ -57,11 +61,12 @@ def test_print_exception():
 
     spy_test_runner = SpyTestRunner()
     spy_test_runner.run_test_function(test_exception)
-    assert_equal(["[ERROR] test_exception: Exception('Whoops!')"], spy_test_runner.printed)
+    assert_equal(
+        ["[ERROR] test_exception: Exception('Whoops!')"], spy_test_runner.printed
+    )
 
 
 def test_run_tests_in_class():
-
     class TestClass:
         test_not_a_function = 4
 

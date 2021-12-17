@@ -24,7 +24,12 @@ class XUnitTestRunner:
         print(text)
 
     def run_test_in_class(self, test_class: Type[object]):
-        test_names = [attrib_name for attrib_name in dir(test_class) if attrib_name.startswith("test_") and callable(getattr(test_class, attrib_name))]
+        test_names = [
+            attrib_name
+            for attrib_name in dir(test_class)
+            if attrib_name.startswith("test_")
+            and callable(getattr(test_class, attrib_name))
+        ]
 
         class_instance = test_class()
         for test_name in test_names:
