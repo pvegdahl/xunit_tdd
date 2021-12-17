@@ -1,4 +1,4 @@
-from xunit import run_test_function, assert_equal, XUnitTestFailure
+from xunit import assert_equal, XUnitTestFailure, XUnitTestRunner
 
 
 def test_can_run_test_function():
@@ -8,7 +8,7 @@ def test_can_run_test_function():
         nonlocal was_run
         was_run = True
 
-    run_test_function(test_function)
+    XUnitTestRunner().run_test_function(test_function)
 
     assert_equal(True, was_run)
     print("SUCCESS")
@@ -31,6 +31,7 @@ def test_assert_equal_does_not_raise_exception_on_equal():
 
 
 if __name__ == "__main__":
-    run_test_function(test_can_run_test_function)
-    run_test_function(test_assert_equal_raises_exception_on_unequal)
-    run_test_function(test_assert_equal_does_not_raise_exception_on_equal)
+    test_runner = XUnitTestRunner()
+    test_runner.run_test_function(test_can_run_test_function)
+    test_runner.run_test_function(test_assert_equal_raises_exception_on_unequal)
+    test_runner.run_test_function(test_assert_equal_does_not_raise_exception_on_equal)
