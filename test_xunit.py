@@ -10,10 +10,8 @@ def test_can_run_test_function():
 
     run_test_function(test_function)
 
-    if was_run:
-        print("SUCCESS")
-    else:
-        print("FAILURE")
+    assert_equal(True, was_run)
+    print("SUCCESS")
 
 
 def test_assert_equal_raises_exception_on_unequal():
