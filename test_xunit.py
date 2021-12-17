@@ -60,6 +60,24 @@ def test_print_exception():
     assert_equal(["[ERROR] test_exception: Exception('Whoops!')"], spy_test_runner.printed)
 
 
+def test_run_tests_in_class():
+
+    class TestClass:
+        def test_a(self):
+            pass
+
+        def test_b(self):
+            pass
+
+        def not_a_test(self):
+            pass
+
+    spy_test_runner = SpyTestRunner()
+    spy_test_runner.run_test_in_class(TestClass)
+
+    assert_equal(["[SUCCESS] test_a", "[SUCCESS] test_b"], spy_test_runner.printed)
+
+
 if __name__ == "__main__":
     test_runner = XUnitTestRunner()
     test_runner.run_test_function(test_can_run_test_function)
@@ -68,3 +86,4 @@ if __name__ == "__main__":
     test_runner.run_test_function(test_print_success)
     test_runner.run_test_function(test_print_failure)
     test_runner.run_test_function(test_print_exception)
+    test_runner.run_test_function(test_run_tests_in_class)

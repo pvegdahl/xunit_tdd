@@ -1,4 +1,4 @@
-from typing import Callable, Any
+from typing import Callable, Any, Type
 
 
 class XUnitTestFailure(Exception):
@@ -22,3 +22,6 @@ class XUnitTestRunner:
 
     def print(self, text: str):
         print(text)
+
+    def run_test_in_class(self, test_class: Type[object]):
+        pass
