@@ -48,7 +48,7 @@ def test_print_failure():
 
     spy_test_runner = SpyTestRunner()
     spy_test_runner.run_test_function(test_failure)
-    assert_equal(["[FAILURE] test_failure"], spy_test_runner.printed)
+    assert_equal(["[FAILURE] test_failure: Expected 42, got 47"], spy_test_runner.printed)
 
 
 if __name__ == "__main__":
