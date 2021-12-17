@@ -30,10 +30,7 @@ def test_assert_equal_raises_exception_on_unequal():
 
 
 def test_assert_equal_does_not_raise_exception_on_equal():
-    try:
-        assert_equal(42, 42)
-    except XUnitTestFailure:
-        print("FAILURE")
+    assert_equal(42, 42)
 
 
 def test_print_success():
