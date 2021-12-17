@@ -42,9 +42,19 @@ def test_print_success():
     assert_equal(["[SUCCESS] test_success"], spy_test_runner.printed)
 
 
+def test_print_failure():
+    def test_failure():
+        assert_equal(42, 47)
+
+    spy_test_runner = SpyTestRunner()
+    spy_test_runner.run_test_function(test_failure)
+    assert_equal(["[FAILURE] test_failure"], spy_test_runner.printed)
+
+
 if __name__ == "__main__":
     test_runner = XUnitTestRunner()
     test_runner.run_test_function(test_can_run_test_function)
     test_runner.run_test_function(test_assert_equal_raises_exception_on_unequal)
     test_runner.run_test_function(test_assert_equal_does_not_raise_exception_on_equal)
     test_runner.run_test_function(test_print_success)
+    test_runner.run_test_function(test_print_failure)
