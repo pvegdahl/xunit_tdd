@@ -24,6 +24,15 @@ def test_assert_equal_raises_exception_on_unequal():
         print("SUCCESS")
 
 
+def test_assert_equal_does_not_raise_exception_on_equal():
+    try:
+        assert_equal(42, 42)
+        print("SUCCESS")
+    except XUnitTestFailure:
+        print("FAILURE")
+
+
 if __name__ == "__main__":
     run_test_function(test_can_run_test_function)
     run_test_function(test_assert_equal_raises_exception_on_unequal)
+    run_test_function(test_assert_equal_does_not_raise_exception_on_equal)
