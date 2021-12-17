@@ -13,3 +13,7 @@ def assert_equal(expected: Any, actual: Any):
 class XUnitTestRunner:
     def run_test_function(self, test_function: Callable):
         test_function()
+        self.print("SUCCESS")
+
+    def print(self, text: str):
+        print(text)
