@@ -63,6 +63,8 @@ def test_print_exception():
 def test_run_tests_in_class():
 
     class TestClass:
+        test_not_a_function = 4
+
         def test_a(self):
             pass
 
