@@ -19,7 +19,6 @@ def test_can_run_test_function():
     XUnitTestRunner().run_test_function(test_function)
 
     assert_equal(True, was_run)
-    print("SUCCESS")
 
 
 def test_assert_equal_raises_exception_on_unequal():
@@ -27,13 +26,12 @@ def test_assert_equal_raises_exception_on_unequal():
         assert_equal(86, 99)
         print("FAILURE")
     except XUnitTestFailure:
-        print("SUCCESS")
+        pass
 
 
 def test_assert_equal_does_not_raise_exception_on_equal():
     try:
         assert_equal(42, 42)
-        print("SUCCESS")
     except XUnitTestFailure:
         print("FAILURE")
 
