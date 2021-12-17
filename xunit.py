@@ -10,4 +10,5 @@ def run_test_function(test_function: Callable):
 
 
 def assert_equal(expected: Any, actual: Any):
-    raise XUnitTestFailure()
+    if expected != actual:
+        raise XUnitTestFailure()
