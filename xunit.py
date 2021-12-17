@@ -17,6 +17,8 @@ class XUnitTestRunner:
             self.print(f"[SUCCESS] {test_function.__name__}")
         except XUnitTestFailure as assertion_failure:
             self.print(f"[FAILURE] {test_function.__name__}: {assertion_failure}")
+        except Exception as e:
+            self.print(f"[ERROR] {test_function.__name__}: {repr(e)}")
 
     def print(self, text: str):
         print(text)
