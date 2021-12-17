@@ -9,88 +9,76 @@ class SpyTestRunner(XUnitTestRunner):
         self.printed.append(text)
 
 
-def test_can_run_test_function():
-    was_run = False
+class TestXUnitTestRunner:
+    def test_can_run_test_function(self):
+        was_run = False
 
-    def test_function():
-        nonlocal was_run
-        was_run = True
+        def test_function():
+            nonlocal was_run
+            was_run = True
 
-    SpyTestRunner().run_test_function(test_function)
+        SpyTestRunner().run_test_function(test_function)
 
-    assert_equal(True, was_run)
+        assert_equal(True, was_run)
 
+    def test_assert_equal_raises_exception_on_unequal(self):
+        try:
+            assert_equal(86, 99)
+            print(
+                "WARNING WARNING WARNING: assert_equals is broken and the rest of your tests are not trustworthy"
+            )
+        except XUnitTestFailure:
+            pass
 
-def test_assert_equal_raises_exception_on_unequal():
-    try:
-        assert_equal(86, 99)
-        print(
-            "WARNING WARNING WARNING: assert_equals is broken and the rest of your tests are not trustworthy"
+    def test_assert_equal_does_not_raise_exception_on_equal(self):
+        assert_equal(42, 42)
+
+    def test_print_success(self):
+        def test_success():
+            pass
+
+        spy_test_runner = SpyTestRunner()
+        spy_test_runner.run_test_function(test_success)
+        assert_equal(["[SUCCESS] test_success"], spy_test_runner.printed)
+
+    def test_print_failure(self):
+        def test_failure():
+            assert_equal(42, 47)
+
+        spy_test_runner = SpyTestRunner()
+        spy_test_runner.run_test_function(test_failure)
+        assert_equal(
+            ["[FAILURE] test_failure: Expected 42, got 47"], spy_test_runner.printed
         )
-    except XUnitTestFailure:
-        pass
 
+    def test_print_exception(self):
+        def test_exception():
+            raise Exception("Whoops!")
 
-def test_assert_equal_does_not_raise_exception_on_equal():
-    assert_equal(42, 42)
+        spy_test_runner = SpyTestRunner()
+        spy_test_runner.run_test_function(test_exception)
+        assert_equal(
+            ["[ERROR] test_exception: Exception('Whoops!')"], spy_test_runner.printed
+        )
 
+    def test_run_tests_in_class(self):
+        class TestClass:
+            test_not_a_function = 4
 
-def test_print_success():
-    def test_success():
-        pass
+            def test_a(self):
+                pass
 
-    spy_test_runner = SpyTestRunner()
-    spy_test_runner.run_test_function(test_success)
-    assert_equal(["[SUCCESS] test_success"], spy_test_runner.printed)
+            def test_b(self):
+                pass
 
+            def not_a_test(self):
+                pass
 
-def test_print_failure():
-    def test_failure():
-        assert_equal(42, 47)
+        spy_test_runner = SpyTestRunner()
+        spy_test_runner.run_test_in_class(TestClass)
 
-    spy_test_runner = SpyTestRunner()
-    spy_test_runner.run_test_function(test_failure)
-    assert_equal(
-        ["[FAILURE] test_failure: Expected 42, got 47"], spy_test_runner.printed
-    )
-
-
-def test_print_exception():
-    def test_exception():
-        raise Exception("Whoops!")
-
-    spy_test_runner = SpyTestRunner()
-    spy_test_runner.run_test_function(test_exception)
-    assert_equal(
-        ["[ERROR] test_exception: Exception('Whoops!')"], spy_test_runner.printed
-    )
-
-
-def test_run_tests_in_class():
-    class TestClass:
-        test_not_a_function = 4
-
-        def test_a(self):
-            pass
-
-        def test_b(self):
-            pass
-
-        def not_a_test(self):
-            pass
-
-    spy_test_runner = SpyTestRunner()
-    spy_test_runner.run_test_in_class(TestClass)
-
-    assert_equal(["[SUCCESS] test_a", "[SUCCESS] test_b"], spy_test_runner.printed)
+        assert_equal(["[SUCCESS] test_a", "[SUCCESS] test_b"], spy_test_runner.printed)
 
 
 if __name__ == "__main__":
-    test_runner = XUnitTestRunner()
-    test_runner.run_test_function(test_can_run_test_function)
-    test_runner.run_test_function(test_assert_equal_raises_exception_on_unequal)
-    test_runner.run_test_function(test_assert_equal_does_not_raise_exception_on_equal)
-    test_runner.run_test_function(test_print_success)
-    test_runner.run_test_function(test_print_failure)
-    test_runner.run_test_function(test_print_exception)
-    test_runner.run_test_function(test_run_tests_in_class)
+    XUnitTestRunner().run_test_in_class(TestXUnitTestRunner)
