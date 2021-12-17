@@ -16,7 +16,7 @@ def test_can_run_test_function():
         nonlocal was_run
         was_run = True
 
-    XUnitTestRunner().run_test_function(test_function)
+    SpyTestRunner().run_test_function(test_function)
 
     assert_equal(True, was_run)
 
