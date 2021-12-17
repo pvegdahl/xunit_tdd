@@ -17,4 +17,4 @@ def test_can_run_test_function():
 
 
 if __name__ == "__main__":
-    test_can_run_test_function()
+    run_test_function(test_can_run_test_function)
