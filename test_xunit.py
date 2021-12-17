@@ -39,7 +39,7 @@ def test_print_success():
 
     spy_test_runner = SpyTestRunner()
     spy_test_runner.run_test_function(test_success)
-    assert_equal(["SUCCESS"], spy_test_runner.printed)
+    assert_equal(["[SUCCESS] test_success"], spy_test_runner.printed)
 
 
 if __name__ == "__main__":
