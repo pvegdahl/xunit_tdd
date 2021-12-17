@@ -24,7 +24,7 @@ def test_can_run_test_function():
 def test_assert_equal_raises_exception_on_unequal():
     try:
         assert_equal(86, 99)
-        print("FAILURE")
+        print("WARNING WARNING WARNING: assert_equals is broken and the rest of your tests are not trustworthy")
     except XUnitTestFailure:
         pass
 
