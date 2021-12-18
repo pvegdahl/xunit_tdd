@@ -49,7 +49,8 @@ class TestXUnitTestRunner(XUnitTestBase):
 
         self.spy_test_runner.run_test_function(test_failure)
         assert_equal(
-            ["[FAILURE] test_failure: Expected 42, got 47"], self.spy_test_runner.printed
+            ["[FAILURE] test_failure: Expected 42, got 47"],
+            self.spy_test_runner.printed,
         )
 
     def test_print_exception(self):
@@ -58,7 +59,8 @@ class TestXUnitTestRunner(XUnitTestBase):
 
         self.spy_test_runner.run_test_function(test_exception)
         assert_equal(
-            ["[ERROR] test_exception: Exception('Whoops!')"], self.spy_test_runner.printed
+            ["[ERROR] test_exception: Exception('Whoops!')"],
+            self.spy_test_runner.printed,
         )
 
     def test_run_tests_in_class(self):
@@ -76,7 +78,9 @@ class TestXUnitTestRunner(XUnitTestBase):
 
         self.spy_test_runner.run_test_in_class(TestClass)
 
-        assert_equal(["[SUCCESS] test_a", "[SUCCESS] test_b"], self.spy_test_runner.printed)
+        assert_equal(
+            ["[SUCCESS] test_a", "[SUCCESS] test_b"], self.spy_test_runner.printed
+        )
 
     def test_run_tests_in_isolation(self):
         class TestClass(XUnitTestBase):
