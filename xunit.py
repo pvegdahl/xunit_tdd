@@ -14,6 +14,9 @@ class XUnitTestBase:
     def setup(self):
         pass
 
+    def teardown(self):
+        pass
+
 
 class XUnitTestRunner:
     def run_test_function(self, test_function: Callable):
@@ -40,3 +43,4 @@ class XUnitTestRunner:
             class_instance = test_class()
             class_instance.setup()
             self.run_test_function(getattr(class_instance, test_name))
+            class_instance.teardown()
