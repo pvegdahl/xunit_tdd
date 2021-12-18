@@ -79,6 +79,22 @@ class TestXUnitTestRunner:
 
         assert_equal(["[SUCCESS] test_a", "[SUCCESS] test_b"], spy_test_runner.printed)
 
+    def test_run_tests_in_isolation(self):
+        class TestClass:
+            init_call_count = 0
+
+            def __init__(self):
+                TestClass.init_call_count += 1
+
+            def test_a(self):
+                pass
+
+            def test_b(self):
+                pass
+
+        SpyTestRunner().run_test_in_class(TestClass)
+        assert_equal(2, TestClass.init_call_count)
+
 
 if __name__ == "__main__":
     XUnitTestRunner().run_test_in_class(TestXUnitTestRunner)
