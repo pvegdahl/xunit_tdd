@@ -10,6 +10,9 @@ class SpyTestRunner(XUnitTestRunner):
 
 
 class TestXUnitTestRunner(XUnitTestBase):
+    def setup(self):
+        self.spy_test_runner = SpyTestRunner()
+
     def test_can_run_test_function(self):
         was_run = False
 
@@ -37,28 +40,25 @@ class TestXUnitTestRunner(XUnitTestBase):
         def test_success():
             pass
 
-        spy_test_runner = SpyTestRunner()
-        spy_test_runner.run_test_function(test_success)
-        assert_equal(["[SUCCESS] test_success"], spy_test_runner.printed)
+        self.spy_test_runner.run_test_function(test_success)
+        assert_equal(["[SUCCESS] test_success"], self.spy_test_runner.printed)
 
     def test_print_failure(self):
         def test_failure():
             assert_equal(42, 47)
 
-        spy_test_runner = SpyTestRunner()
-        spy_test_runner.run_test_function(test_failure)
+        self.spy_test_runner.run_test_function(test_failure)
         assert_equal(
-            ["[FAILURE] test_failure: Expected 42, got 47"], spy_test_runner.printed
+            ["[FAILURE] test_failure: Expected 42, got 47"], self.spy_test_runner.printed
         )
 
     def test_print_exception(self):
         def test_exception():
             raise Exception("Whoops!")
 
-        spy_test_runner = SpyTestRunner()
-        spy_test_runner.run_test_function(test_exception)
+        self.spy_test_runner.run_test_function(test_exception)
         assert_equal(
-            ["[ERROR] test_exception: Exception('Whoops!')"], spy_test_runner.printed
+            ["[ERROR] test_exception: Exception('Whoops!')"], self.spy_test_runner.printed
         )
 
     def test_run_tests_in_class(self):
@@ -74,10 +74,9 @@ class TestXUnitTestRunner(XUnitTestBase):
             def not_a_test(self):
                 pass
 
-        spy_test_runner = SpyTestRunner()
-        spy_test_runner.run_test_in_class(TestClass)
+        self.spy_test_runner.run_test_in_class(TestClass)
 
-        assert_equal(["[SUCCESS] test_a", "[SUCCESS] test_b"], spy_test_runner.printed)
+        assert_equal(["[SUCCESS] test_a", "[SUCCESS] test_b"], self.spy_test_runner.printed)
 
     def test_run_tests_in_isolation(self):
         class TestClass(XUnitTestBase):
