@@ -31,6 +31,6 @@ class XUnitTestRunner:
             and callable(getattr(test_class, attrib_name))
         ]
 
-        class_instance = test_class()
         for test_name in test_names:
+            class_instance = test_class()
             self.run_test_function(getattr(class_instance, test_name))
