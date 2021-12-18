@@ -95,6 +95,23 @@ class TestXUnitTestRunner:
         SpyTestRunner().run_test_in_class(TestClass)
         assert_equal(2, TestClass.init_call_count)
 
+    def test_setup(self):
+        class TestClass:
+            calls = []
+
+            def setup(self):
+                TestClass.calls.append("setup")
+
+            def test_failure(self):
+                TestClass.calls.append("test_failure")
+                assert_equal(40, 77)
+
+            def test_success(self):
+                TestClass.calls.append("test_success")
+
+        SpyTestRunner().run_test_in_class(TestClass)
+        assert_equal(["setup", "test_failure", "setup", "test_success"], TestClass.calls)
+
 
 if __name__ == "__main__":
     XUnitTestRunner().run_test_in_class(TestXUnitTestRunner)
