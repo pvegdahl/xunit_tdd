@@ -10,6 +10,11 @@ def assert_equal(expected: Any, actual: Any):
         raise XUnitTestFailure(f"Expected {expected}, got {actual}")
 
 
+class XUnitTestBase:
+    def setup(self):
+        pass
+
+
 class XUnitTestRunner:
     def run_test_function(self, test_function: Callable):
         try:
@@ -23,7 +28,7 @@ class XUnitTestRunner:
     def print(self, text: str):
         print(text)
 
-    def run_test_in_class(self, test_class: Type[object]):
+    def run_test_in_class(self, test_class: Type[XUnitTestBase]):
         test_names = [
             attrib_name
             for attrib_name in dir(test_class)
@@ -33,4 +38,5 @@ class XUnitTestRunner:
 
         for test_name in test_names:
             class_instance = test_class()
+            class_instance.setup()
             self.run_test_function(getattr(class_instance, test_name))

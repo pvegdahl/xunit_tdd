@@ -1,4 +1,4 @@
-from xunit import assert_equal, XUnitTestFailure, XUnitTestRunner
+from xunit import assert_equal, XUnitTestFailure, XUnitTestRunner, XUnitTestBase
 
 
 class SpyTestRunner(XUnitTestRunner):
@@ -9,7 +9,7 @@ class SpyTestRunner(XUnitTestRunner):
         self.printed.append(text)
 
 
-class TestXUnitTestRunner:
+class TestXUnitTestRunner(XUnitTestBase):
     def test_can_run_test_function(self):
         was_run = False
 
@@ -62,7 +62,7 @@ class TestXUnitTestRunner:
         )
 
     def test_run_tests_in_class(self):
-        class TestClass:
+        class TestClass(XUnitTestBase):
             test_not_a_function = 4
 
             def test_a(self):
@@ -80,7 +80,7 @@ class TestXUnitTestRunner:
         assert_equal(["[SUCCESS] test_a", "[SUCCESS] test_b"], spy_test_runner.printed)
 
     def test_run_tests_in_isolation(self):
-        class TestClass:
+        class TestClass(XUnitTestBase):
             init_call_count = 0
 
             def __init__(self):
@@ -96,7 +96,7 @@ class TestXUnitTestRunner:
         assert_equal(2, TestClass.init_call_count)
 
     def test_setup(self):
-        class TestClass:
+        class TestClass(XUnitTestBase):
             calls = []
 
             def setup(self):
